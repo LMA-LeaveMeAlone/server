@@ -4,12 +4,15 @@ const messageRoutes = require('./messageRoutes')
 function subscribe() {
   client.on('connect', function () {
     console.log('OK -- Connected to MQTT client')
-    client.subscribe('/sensor/movement', (err) => {
-      console.log('OK -- Subscribed to /sensor/movement')
-      if (err) {
-        throw new Error(err.message)
-      }
+    messageRoutes.forEach((route) => {
+      client.subscribe(route.topic, (err) => {
+        if (err) {
+          throw new Error(err.message)
+        }
+        console.log(`OK -- Subscribed to ${route.topic}`)
+      })
     })
+    
   })
   client.on('message', (topic, message) => {
     const route = messageRoutes.find(route => route.topic === topic)
