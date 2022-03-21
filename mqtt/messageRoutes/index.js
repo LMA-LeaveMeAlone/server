@@ -1,8 +1,8 @@
 const { onSensorMovement } = require('./sensorMovement')
-
+const { topics } = require('../enums')
 module.exports = [
   {
-    topic: '/sensor/movement',
+    topic: topics.sensorMovement,
     onMessage: onSensorMovement
-  }
+  },
 ]

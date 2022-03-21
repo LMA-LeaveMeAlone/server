@@ -11,6 +11,8 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
+app.use('/leavemealone/users', require('./http/routes/users'))
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`OK -- Server started on port ${process.env.SERVER_PORT}`)
   MQTTSubscribe()
