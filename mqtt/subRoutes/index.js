@@ -4,5 +4,5 @@ module.exports = [
   {
     topic: topics.sensorMovement,
     onMessage: onSensorMovement
-  },
+  }
 ]
