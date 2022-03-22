@@ -20,13 +20,8 @@ const generateAccessToken = (user) => {
   return jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1y'})
 }
 
-const generateRefreshToken = (user) => {
-  return jwt.sign({user}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1y'})
-}
-
 
 module.exports = {
   generateAccessToken,
   authenticateToken,
-  generateRefreshToken,
 }
