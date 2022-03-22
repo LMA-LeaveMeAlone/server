@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 
 const appRoot = '/leavemealone'
 // Set up API routes
-app.use(`${appRoot}/users`, require('./http/routes/users'))
+app.use(`${appRoot}/user`, require('./http/routes/user'))
 app.use(`${appRoot}/spotlight`, require('./http/routes/spotlight'))
 app.use(`${appRoot}/alarm`, require('./http/routes/alarm'))
 
