@@ -5,7 +5,7 @@
     "version": "Z",
     "title": "Leave Me Alone"
   },
-  "host": "localhost:3000",
+  "host": "localhost:3000/leavemealone",
   "tags": [
     {
       "name": "user",
