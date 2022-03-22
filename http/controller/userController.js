@@ -5,8 +5,8 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 module.exports = {
   login: async (req, res) => {
-    if (!req.body.emailOrUsername) {
-      res.status(400).send('Please provide emailOrUsername attribute.'); return
+    if (!req.body.emailOrUserName) {
+      res.status(400).send('Please provide emailOrUserName attribute.'); return
     }
     if (!req.body.password) {
       res.status(400).send('Please provide password attribute.'); return
@@ -15,8 +15,8 @@ module.exports = {
       {
         '$or':
         [
-          { userName :  req.body.emailOrUsername },
-          { email  :  req.body.emailOrUsername }
+          { userName :  req.body.emailOrUserName },
+          { email  :  req.body.emailOrUserName }
         ]
       },
       (err, user) => {
@@ -55,8 +55,10 @@ module.exports = {
           { email  :  user.email }
         ]
       },(err, foundUser) => {
-        if(err)
+        if(err){
+          res.status(500).send('Internal error.')
           throw new Error(err)
+        }
         if(foundUser){
           if(user.userName === foundUser.userName){
             res.status(403).send('Username already exists.')
