@@ -18,11 +18,8 @@ app.use(bodyParser.json())
 const appRoot = '/leavemealone'
 // Set up API routes
 app.use(`${appRoot}/user`, require('./http/routes/user'))
-app.use(`${appRoot}/spotlight`, require('./http/routes/spotlight'))
-app.use(`${appRoot}/alarm`, require('./http/routes/alarm'))
+app.use(`${appRoot}/house`, require('./http/routes/house'))
 app.use(`${appRoot}/docs`, swaggerUi.serve, swaggerUi.setup(JSONContract))
-
-console.log('a1b2c3')
 
 async function main() {
   console.log('Connecting to mongoDB...')

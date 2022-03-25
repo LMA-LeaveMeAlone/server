@@ -12,8 +12,8 @@
       "description": "Everything about users."
     },
     {
-      "name": "spotlight",
-      "description": "Everything about spotlight."
+      "name": "house",
+      "description": "Everything about house."
     }
   ],
   "paths": {
@@ -107,10 +107,37 @@
         }
       }
     },
-    "/spotlight/toggle": {
-      "post": {
+    "/house/sensors": {
+      "get": {
         "tags": [
-          "spotlight"
+          "house"
+        ],
+        "summary": "Retrieves the status of the house sensors.",
+        "responses": {
+          "200": {
+            "description": "Here you have the status of the sensors.",
+            "schema": {
+              "$ref": "#/definitions/loginResponse"
+            }
+          },
+          "404": {
+            "description": "The user doesn't have any house."
+          },
+          "401": {
+            "description": "Unauthorized or invalid access token."
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/house/sensors/spotlight/toggle": {
+      "put": {
+        "tags": [
+          "house"
         ],
         "summary": "Toggles the spotlight.",
         "responses": {
@@ -128,10 +155,10 @@
         ]
       }
     },
-    "/alarm/toggle": {
-      "post": {
+    "/house/sensors/alarm/toggle": {
+      "put": {
         "tags": [
-          "alarm"
+          "house"
         ],
         "summary": "Toggles the alarm.",
         "responses": {
@@ -159,6 +186,31 @@
   },
   "definitions": {
     "User": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "example": "Alex"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Alexandre"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Viale"
+        },
+        "email": {
+          "type": "string",
+          "example": "alexandre.viale@leavemealone.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "zzz"
+        }
+      }
+    },
+    "Sensors": {
       "type": "object",
       "properties": {
         "userName": {

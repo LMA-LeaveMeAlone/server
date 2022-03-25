@@ -1,8 +1,8 @@
-const MqttConnector = require('../../mqtt/model/MqttConnector')
+const { getMQTTClient } = require('../../mqtt/model/MqttConnector')
 const { topics } = require('../../mqtt/enums')
 module.exports = {
   toggleLight: (_req, res) => {
-    const client = MqttConnector.getMQTTClient()
+    const client = getMQTTClient()
     client.publish(topics.spotlight, 'toggle')
     res.status(200).send('Light toggled')
   }
