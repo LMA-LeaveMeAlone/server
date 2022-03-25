@@ -64,8 +64,8 @@ module.exports = {
       user.password = hash(body.password)
       user.houseId = foundHouse._id
       await user.save()
-      user.password = undefined
       await House.findOneAndUpdate({_id: foundHouse._id},{activated: true})
+      user.houseId = user.password = user._id = undefined
       res.status(201).send({ user, accessToken: generateAccessToken(user) })  
     }catch(err){
       res.status(500).send('Internal error.')

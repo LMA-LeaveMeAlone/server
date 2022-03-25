@@ -34,10 +34,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "User object that needs to be created.",
+            "description": "User object that needs to be created and house's digital key.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/registerBody"
             }
           }
         ],
@@ -210,6 +210,35 @@
         "accessToken": {
           "type": "string",
           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Imxhc3ROYW1lIjoiZmV6ZnphZWZ6YSIsImZpcnN0TmFtZSI6ImZhemZheiIsImVtYWlsIjoiZmV6ZmVhekBkYXpkYS5mciIsInVzZXJOYW1lIjoidGVzdHpmZXpmZXp6eiIsIl9pZCI6IjYyM2E1NDhjZDAxOTMyMjdlMjFhNWYwYiIsIl9fdiI6MH0sImlhdCI6MTY0Nzk4OTkwMCwiZXhwIjoxNjc5NTQ3NTAwfQ.6_RhXetPSh-Nga_b_b2Pp_Tolu_33C7OrtJpSquVg8s"
+        }
+      }
+    },
+    "registerBody": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "example": "Alex"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Alexandre"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Viale"
+        },
+        "email": {
+          "type": "string",
+          "example": "alexandre.viale@leavemealone.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "zzz"
+        },
+        "digitalKey": {
+          "type": "string",
+          "example": "dzkeauygbfykzhukejkfbezj"
         }
       }
     }
