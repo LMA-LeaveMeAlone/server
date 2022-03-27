@@ -5,7 +5,7 @@ const HouseSchema = new mongoose.Schema({
   _id: ObjectId,
   activated: Boolean,
   digitalKey: String,
-  sensors: Object
+  objects: Object
 })
 const House = mongoose.model('house', HouseSchema)
 

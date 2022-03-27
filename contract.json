@@ -12,8 +12,8 @@
       "description": "Everything about users."
     },
     {
-      "name": "house",
-      "description": "Everything about house."
+      "name": "object",
+      "description": "Everything about the objects of the house"
     }
   ],
   "paths": {
@@ -107,17 +107,17 @@
         }
       }
     },
-    "/house/sensors": {
+    "/object": {
       "get": {
         "tags": [
-          "house"
+          "object"
         ],
-        "summary": "Retrieves the status of the house sensors.",
+        "summary": "Retrieves the status of all the object in the house.",
         "responses": {
           "200": {
             "description": "Here you have the status of the sensors.",
             "schema": {
-              "$ref": "#/definitions/loginResponse"
+              "$ref": "#/definitions/Objects"
             }
           },
           "404": {
@@ -134,15 +134,24 @@
         ]
       }
     },
-    "/house/sensors/spotlight/toggle": {
+    "/object/spotlight/toggle": {
       "put": {
         "tags": [
-          "house"
+          "object"
         ],
         "summary": "Toggles the spotlight.",
         "responses": {
           "200": {
-            "description": "The spotlight has been toggled."
+            "description": "The spotlight has been toggled, there is the actual status.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "spotlight": {
+                  "type": "boolean",
+                  "example": "true"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized or invalid access token."
@@ -155,15 +164,24 @@
         ]
       }
     },
-    "/house/sensors/alarm/toggle": {
+    "/object/alarm/toggle": {
       "put": {
         "tags": [
-          "house"
+          "object"
         ],
         "summary": "Toggles the alarm.",
         "responses": {
           "200": {
-            "description": "The alarm has been toggled."
+            "description": "The alarm has been toggled.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "alarm": {
+                  "type": "boolean",
+                  "example": "false"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized or invalid access token."
@@ -210,29 +228,21 @@
         }
       }
     },
-    "Sensors": {
+    "Objects": {
       "type": "object",
       "properties": {
-        "userName": {
-          "type": "string",
-          "example": "Alex"
+        "spotlight": {
+          "type": "boolean",
+          "example": "true"
         },
-        "firstName": {
-          "type": "string",
-          "example": "Alexandre"
+        "alarm": {
+          "type": "boolean",
+          "example": "false"
         },
-        "lastName": {
-          "type": "string",
-          "example": "Viale"
-        },
-        "email": {
-          "type": "string",
-          "example": "alexandre.viale@leavemealone.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "zzz"
-        }
+        "movement": {
+          "type": "boolean",
+          "example": "false"
+        }     
       }
     },
     "loginResponse": {

@@ -18,13 +18,14 @@ app.use(bodyParser.json())
 const appRoot = '/leavemealone'
 // Set up API routes
 app.use(`${appRoot}/user`, require('./http/routes/user'))
-app.use(`${appRoot}/house`, require('./http/routes/house'))
+app.use(`${appRoot}/object`, require('./http/routes/object'))
 app.use(`${appRoot}/docs`, swaggerUi.serve, swaggerUi.setup(JSONContract))
 
 async function main() {
   console.log('Connecting to mongoDB...')
   await mongoose.connect(process.env.MONGODB_URL)
   console.log('Connected to MongoDB')
+
   app.listen(PORT, () => {
     console.log(`OK -- Server started on port ${PORT}`)
     MqttConnector.connectAndSubscribe()
