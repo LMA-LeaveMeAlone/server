@@ -112,7 +112,7 @@
         "tags": [
           "object"
         ],
-        "summary": "Retrieves the status of all the object in the house.",
+        "summary": "Retrieves the status of all the objects of the house.",
         "responses": {
           "200": {
             "description": "Here you have the status of the sensors.",

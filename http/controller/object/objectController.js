@@ -1,4 +1,4 @@
-const House = require('../model/House')
+const House = require('../../model/House')
 module.exports = {
   getSensorsStatus: async (req, res) => {
     try {

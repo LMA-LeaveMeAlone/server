@@ -1,6 +1,6 @@
 const express = require('express')
 const { authenticateToken } = require('../../controller/auth')
-const { getSensorsStatus } = require('../../controller/objectController')
+const { getSensorsStatus } = require('../../controller/object/objectController')
 const router = new express.Router()
 
 router.get('/', authenticateToken, getSensorsStatus)

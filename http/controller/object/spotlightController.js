@@ -1,6 +1,6 @@
-const { getMQTTClient } = require('../../mqtt/model/MqttConnector')
-const { topics } = require('../../mqtt/enums')
-const House = require('../model/House')
+const { getMQTTClient } = require('../../../mqtt/model/MqttConnector')
+const { topics } = require('../../../mqtt/enums')
+const House = require('../../model/House')
 module.exports = {
   toggleLight: async (_req, res) => {
     try{
