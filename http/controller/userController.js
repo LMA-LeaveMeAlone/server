@@ -47,7 +47,7 @@ module.exports = {
     if(!receivedUser.email){ res.send('Please provide email attribute.'); return }
     if(!receivedUser.password){ res.send('Please provide password attribute.'); return }
     if(!receivedUser.userName){ res.send('Please provide userName attribute.'); return }
-    if(!receivedUser.digitalKey){ res.send('Please provide digitalKey attribute.'); return }
+    if(!req.body.digitalKey){ res.send('Please provide digitalKey attribute.'); return }
     try{
       const foundUser = await User.findOne({'$or':[{ userName :  receivedUser.userName },{ email  :  receivedUser.email }]})
       if(foundUser){

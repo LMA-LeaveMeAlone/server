@@ -278,25 +278,30 @@
     "registerBody": {
       "type": "object",
       "properties": {
-        "userName": {
-          "type": "string",
-          "example": "Alex"
-        },
-        "firstName": {
-          "type": "string",
-          "example": "Alexandre"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "Viale"
-        },
-        "email": {
-          "type": "string",
-          "example": "alexandre.viale@leavemealone.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "zzz"
+        "user": {
+          "type": "object",
+          "properties": {
+            "userName": {
+              "type": "string",
+              "example": "Alex"
+            },
+            "firstName": {
+              "type": "string",
+              "example": "Alexandre"
+            },
+            "lastName": {
+              "type": "string",
+              "example": "Viale"
+            },
+            "email": {
+              "type": "string",
+              "example": "alexandre.viale@leavemealone.com"
+            },
+            "password": {
+              "type": "string",
+              "example": "zzz"
+            }
+          }
         },
         "digitalKey": {
           "type": "string",
