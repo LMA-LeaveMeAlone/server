@@ -6,6 +6,8 @@ var app = express()
 const MqttConnector = require('./mqtt/model/MqttConnector')
 const swaggerUi = require('swagger-ui-express')
 const JSONContract = require('./contract.json')
+const House = require('./http/model/House')
+const { hash } = require('./http/controller/utils')
 
 // Injects .env file in process.env
 require('dotenv').config()
@@ -25,7 +27,8 @@ async function main() {
   console.log('Connecting to mongoDB...')
   await mongoose.connect(process.env.MONGODB_URL)
   console.log('Connected to MongoDB')
-
+  console.log(await House.findOne({}))
+  console.log(hash('test'))
   app.listen(PORT, () => {
     console.log(`OK -- Server started on port ${PORT}`)
     MqttConnector.connectAndSubscribe()
