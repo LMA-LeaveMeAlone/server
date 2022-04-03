@@ -2,8 +2,8 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const AWS = require('aws-sdk')
 
-const ID = 'AKIAZYYELXDIDASCHQYD'
-const SECRET = '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'
+const ID = ''
+const SECRET = ''
 const BUCKET_NAME = 'lma-records-2'
 
 module.exports = {
