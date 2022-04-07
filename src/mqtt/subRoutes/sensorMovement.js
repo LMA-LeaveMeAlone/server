@@ -3,7 +3,7 @@ const cameraManager = require ('../model/CameraManager')
 module.exports = {
   onSensorMovement: async message => {
     console.log('Movement received :', message.toString())
-    console.log('Should start camera') //TODO Python script to start camera
+    console.log('Recording video...')
     let video = await cameraManager.recordCameraVideo()
     console.log('video_name : ',video.video)
     await cameraManager.convertVideoToMp4(video.video)

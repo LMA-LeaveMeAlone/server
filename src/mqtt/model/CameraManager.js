@@ -2,8 +2,6 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const AWS = require('aws-sdk')
 
-const ID = ''
-const SECRET = ''
 const BUCKET_NAME = 'lma-records-2'
 
 module.exports = {
@@ -12,7 +10,7 @@ module.exports = {
       //video name (timestamp)
       let video_name = getDate()
       //Exec camera recording
-      exec(`raspivid -o ${video_name}.h264 -awb greyworld -t 5000`, (error, stdout, stderr) => {
+      exec(`raspivid -o ${__dirname + '/records/' + video_name}.h264 -awb greyworld -t 5000`, (error, stdout, stderr) => {
         if (stderr || error) {
           resolve({video: false})
         }else{
@@ -27,7 +25,7 @@ module.exports = {
   convertVideoToMp4: async (video_name) => {
     return new Promise((resolve) => {
       //Exec video convert to mp4
-      exec(`MP4Box -add ${video_name}.h264 ${video_name}.mp4`, (error, stdout, stderr) => {
+      exec(`MP4Box -add ${__dirname +  '/records/' + video_name}.h264 ${__dirname + '/records/' + video_name}.mp4`, (error, stdout, stderr) => {
         if (stderr || error) {
           resolve({video: false})
         }else{

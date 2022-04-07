@@ -30,4 +30,5 @@ async function main() {
     MqttConnector.connectAndSubscribe()
   })
 }
+console.log(__dirname)
 main()
