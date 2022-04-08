@@ -1,5 +1,7 @@
 const { exec } = require('child_process')
 const fs = require('fs')
+const ObjectId = require('mongoose').Types.ObjectId
+const Record = require('../../http/model/Records')
 
 const AWS = require('aws-sdk')
 const AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY
@@ -66,10 +68,29 @@ module.exports = {
         //Utilisation de la fonction upload d'AWS-SDK
         s3.upload(params, (err, data) => {
           if(err) resolve(err)
-          console.log(`File uploaded at ${data.Location}`)
-          resolve(true)
+          console.log('FILE UPLOADED')
+          resolve(data.Location)
         })
       })
+    })
+  },
+
+  addVideoToMongo: async(houseId, url, message) => {
+    return new Promise((resolve) => {
+      try{
+        const record = new Record({
+          _id: ObjectId(),
+          datetime: new Date(),
+          houseId: houseId,
+          url: url,
+          message: message
+        })
+        record.save().then(() => {
+          resolve(true)
+        })
+      }catch(err){
+        resolve(err)
+      }
     })
   },
 

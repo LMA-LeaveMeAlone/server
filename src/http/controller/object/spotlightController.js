@@ -4,10 +4,11 @@ const House = require('../../model/House')
 module.exports = {
   toggleLight: async (_req, res) => {
     try{
+      console.log('bonsoir')
       const client = getMQTTClient()
-      await client.publish(topics.spotlight, 'toggle')
       const house = await House.findOne({})
       house.objects.spotlight = !house.objects.spotlight
+      await client.publish(topics.spotlight, house.objects.spotlight ? '1' : '0')
       await House.findOneAndUpdate({_id: res.locals.user.houseId}, {objects: house.objects})
       res.status(200).send({spotlight: house.objects.spotlight})
     }catch(e){
