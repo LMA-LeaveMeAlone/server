@@ -11,16 +11,16 @@ const tmp_file_records = '/home/ubuntu/server/records/'
 module.exports = {
   recordCameraVideo: async () => {
     return new Promise((resolve) => {
+      console.log('RECORDING VIDEO')
       //video name (timestamp)
       let video_name = getDate()
       //Exec camera recording
       exec(`raspivid -o ${tmp_file_records + video_name}.h264 -awb greyworld -t 5000`, (error, stdout, stderr) => {
         if (stderr || error) {
-          console.log(stderr || error)
-          resolve({video: false})
+          resolve(stderr || error)
         }else{
           console.log('test')
-          resolve({video: video_name})
+          resolve(video_name)
         }
       })
     })
@@ -29,12 +29,13 @@ module.exports = {
   //params : video_name
   convertVideoToMp4: async (video_name) => {
     return new Promise((resolve) => {
+      console.log('CONVERTING VIDEO')
       //Exec video convert to mp4
       exec(`MP4Box -add ${tmp_file_records + video_name}.h264 ${tmp_file_records + video_name}.mp4`, (error, stdout, stderr) => {
         if (stderr || error) {
-          resolve({video: false})
+          resolve(stderr || error)
         }else{
-          resolve({video: true})
+          resolve(true)
         }
       })
     })
@@ -43,6 +44,7 @@ module.exports = {
   //params : video_name, house_id
   sendVideoToAWScloud: async (video_name, house_id) => {
     return new Promise((resolve) => {
+      console.log('SENDING VIDEO')
       //Constante qui contient les info de connexion au bucket
       const s3 = new AWS.S3({
         accessKeyId: AWS_ACCESS_KEY,
@@ -63,8 +65,22 @@ module.exports = {
 
         //Utilisation de la fonction upload d'AWS-SDK
         s3.upload(params, (err, data) => {
-          if(err) resolve({result: false})
-          console.log(`File uploaded at ${data.Location}`)   
+          if(err) resolve(err)
+          console.log(`File uploaded at ${data.Location}`)
+          resolve(true)
+        })
+      })
+    })
+  },
+
+  deleteVideoLocally: async (video_name) => {
+    return new Promise((resolve) => {
+      console.log('DELETING VIDEO')
+      fs.unlink(tmp_file_records + video_name + '.h264', (err) => {
+        if(err) resolve(err)
+        fs.unlink(tmp_file_records + video_name + '.mp4', (err) => {
+          if(err) resolve(err)
+          resolve(true)
         })
       })
     })
