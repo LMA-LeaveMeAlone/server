@@ -1,7 +1,7 @@
 const { exec } = require('child_process')
 const fs = require('fs')
 const ObjectId = require('mongoose').Types.ObjectId
-const Record = require('../../http/model/Records')
+const Record = require('../../http/model/Record')
 
 const AWS = require('aws-sdk')
 const AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY

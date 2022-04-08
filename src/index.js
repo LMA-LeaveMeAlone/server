@@ -19,6 +19,7 @@ const appRoot = '/leavemealone'
 // Set up API routes
 app.use(`${appRoot}/user`, require('./http/routes/user'))
 app.use(`${appRoot}/object`, require('./http/routes/object'))
+app.use(`${appRoot}/record`, require('./http/routes/record'))
 app.use(`${appRoot}/docs`, swaggerUi.serve, swaggerUi.setup(JSONContract))
 
 async function main() {
@@ -30,5 +31,4 @@ async function main() {
     MqttConnector.connectAndSubscribe()
   })
 }
-console.log(__dirname)
 main()
