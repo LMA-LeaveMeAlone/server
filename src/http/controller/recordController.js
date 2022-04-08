@@ -1,5 +1,3 @@
-// const Record = require('../model/Record')
-
 const Record = require('../model/Record')
 
 module.exports = {
