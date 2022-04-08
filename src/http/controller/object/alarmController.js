@@ -5,9 +5,9 @@ module.exports = {
   toggleAlarm: async (_req, res) => {
     try{
       const client = getMQTTClient()
-      client.publish(topics.alarm, 'toggle')
       const house = await House.findOne({})
       house.objects.alarm = !house.objects.alarm
+      client.publish(topics.alarm, house.objects.alarm ? '1' : '0')
       await House.findOneAndUpdate({_id: res.locals.user.houseId}, {objects: house.objects})
       res.status(200).send({alarm: house.objects.alarm})
     }catch(e){
