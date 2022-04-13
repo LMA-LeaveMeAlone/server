@@ -7,7 +7,7 @@ module.exports = {
       const client = getMQTTClient()
       const house = await House.findOne({})
       house.objects.alarm = !house.objects.alarm
-      client.publish(topics.alarm, house.objects.alarm ? '1' : '0')
+      process.env.ALLOW_MQTT && client.publish(topics.alarm, house.objects.alarm ? '1' : '0')
       await House.findOneAndUpdate({_id: res.locals.user.houseId}, {objects: house.objects})
       res.status(200).send({alarm: house.objects.alarm})
     }catch(e){

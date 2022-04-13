@@ -23,12 +23,17 @@ app.use(`${appRoot}/record`, require('./http/routes/record'))
 app.use(`${appRoot}/docs`, swaggerUi.serve, swaggerUi.setup(JSONContract))
 
 async function main() {
-  console.log('Connecting to mongoDB...')
-  await mongoose.connect(process.env.MONGODB_URL)
-  console.log('Connected to MongoDB')
+  try{
+    console.log('Connecting to mongoDB...')
+    await mongoose.connect(process.env.MONGODB_URL)
+    console.log('Connected to MongoDB')
+  }catch(e){
+    console.error('Error when connecting to MongoDB')
+    throw new Error(e)
+  }
   app.listen(PORT, () => {
     console.log(`OK -- Server started on port ${PORT}`)
-    MqttConnector.connectAndSubscribe()
+    process.env.ALLOW_MQTT && MqttConnector.connectAndSubscribe()
   })
 }
 main()
