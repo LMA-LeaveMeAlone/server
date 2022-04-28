@@ -27,7 +27,10 @@
     "mongoose": "^6.2.7",
     "mqtt": "^4.3.7",
     "nodemon": "^2.0.15",
+    "pi-camera-connect": "^0.3.4",
     "sha.js": "^2.4.11",
+    "socket.io": "^4.5.0",
+    "socket.io-client": "^4.5.0",
     "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
