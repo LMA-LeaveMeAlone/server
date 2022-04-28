@@ -33,7 +33,7 @@ async function main() {
   }
   app.listen(PORT, () => {
     console.log(`OK -- Server started on port ${PORT}`)
-    process.env.ALLOW_MQTT && MqttConnector.connectAndSubscribe()
+    process.env.ALLOW_MQTT === 'true' && MqttConnector.connectAndSubscribe()
   })
 }
 main()

@@ -4,7 +4,6 @@ const House = require('../../model/House')
 module.exports = {
   toggleLight: async (_req, res) => {
     try{
-      console.log('bonsoir')
       const client = getMQTTClient()
       const house = await House.findOne({})
       house.objects.spotlight = !house.objects.spotlight

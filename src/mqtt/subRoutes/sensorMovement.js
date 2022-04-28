@@ -6,8 +6,8 @@ module.exports = {
 
     let video_name = await cameraManager.recordCameraVideo()
     await cameraManager.convertVideoToMp4(video_name)
-    let video_location = await cameraManager.sendVideoToAWScloud(video_name, 'house_id_1')
-    await cameraManager.addVideoToMongo('house_id_1', video_location, 'undefined')
+    let video_location = await cameraManager.sendVideoToAWScloud(video_name, process.env.HOUSE_ID)
+    await cameraManager.addVideoToMongo(process.env.HOUSE_ID, video_location, 'undefined')
     await cameraManager.deleteVideoLocally(video_name)
   }
 }

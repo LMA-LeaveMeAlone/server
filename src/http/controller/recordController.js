@@ -4,6 +4,7 @@ module.exports = {
   getRecords: async (req, res) => {
     try{
       const records = await Record.find({houseId: res.locals.user.houseId})
+      console.log(records)
       res.send(records)
     }catch(e){
       res.status(500).json({

@@ -21,7 +21,6 @@ module.exports = {
         if (stderr || error) {
           resolve(stderr || error)
         }else{
-          console.log('test')
           resolve(video_name)
         }
       })
