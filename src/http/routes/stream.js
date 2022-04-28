@@ -27,7 +27,7 @@ socket.on('consumer-left', (data) => {
 })
 
 streamCamera.on('frame', (data) => {
-  socket.binary(true).emit('pi-video-stream', 'Cam-1', 'data:image/jpeg;base64,' + data.toString('base64'))
+  socket.emit('pi-video-stream', 'Cam-1', 'data:image/jpeg;base64,' + data.toString('base64'))
 })
 
 async function cameraStartCapture() {
