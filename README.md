@@ -17,6 +17,11 @@ SERVER_PORT=3000 // The port you want this app to run on (default 80)
 MQTT_BROKER_URL="http://localhost:1883" // The URL of your MQTT Broker (required)
 MONGODB_URL="mongodb://localhost:27017/leavemealone" // The URL of your mongoDB database (required)
 ACCESS_TOKEN_SECRET=GD8Z7A9GD8326D307 // A random complex string to provide a key for JWT tokens creation
+AWS_ACCESS_KEY=foezygfnezhyfhe,zkul // Clef cd'accès AWS
+AWS_SECRET_ACCESS_KEY=femzalkfknzejflzfe Clef secrète AWS
+AWS_BUCKET_NAME=aws-lma-video-records // Nom du becket AWS
+ALLOW_MQTT=true // Mettre à true hors debug
+HOUSE_ID=623d8e34e7f571ff792a7e6d // Id de la maison (paramétrage d'usine du raspberry identifié à la en question)
 `
 
 ## Start
