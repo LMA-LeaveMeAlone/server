@@ -12,6 +12,10 @@
       "description": "Everything about users."
     },
     {
+      "name": "record",
+      "description": "Everything about the records done by the camera"
+    },
+    {
       "name": "object",
       "description": "Everything about the objects of the house"
     }
@@ -107,6 +111,33 @@
         }
       }
     },
+    "/record": {
+      "get": {
+        "tags": [
+          "record"
+        ],
+        "summary": "Retrieves all the records done by the camera of the house of the user.",
+        "responses": {
+          "200": {
+            "description": "Here you have a list of all the records.",
+            "schema": {
+              "$ref": "#/definitions/Records"
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid access token."
+          },
+          "404": {
+            "description": "This house doesn't have any record."
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
     "/object": {
       "get": {
         "tags": [
@@ -120,11 +151,11 @@
               "$ref": "#/definitions/Objects"
             }
           },
-          "404": {
-            "description": "The user doesn't have any house."
-          },
           "401": {
             "description": "Unauthorized or invalid access token."
+          },
+          "404": {
+            "description": "The user doesn't have any house."
           }
         },
         "security": [
@@ -228,6 +259,30 @@
         }
       }
     },
+    "Records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "datetime": {
+            "type": "string",
+            "example": "2022-04-28T12:54:38.706Z"
+          },
+          "houseId": {
+            "type": "string",
+            "example": "ohdubzhc678gdaziuyy"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://.../2022_4_28_12_54_0.mp4"
+          },
+          "message": {
+            "type": "string",
+            "example": "2 personnes et un chien"
+          }
+        }
+      }
+    },
     "Objects": {
       "type": "object",
       "properties": {
@@ -242,7 +297,7 @@
         "movement": {
           "type": "boolean",
           "example": "false"
-        }     
+        }
       }
     },
     "loginResponse": {
