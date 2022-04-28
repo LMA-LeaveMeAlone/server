@@ -1,5 +1,6 @@
 const cameraManager = require ('../model/CameraManager')
 
+
 module.exports = {
   onSensorMovement: async message => {
     console.log('Movement received :', message.toString())
