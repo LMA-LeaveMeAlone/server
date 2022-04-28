@@ -8,7 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.js" crossorigin="anonymous"></script>
   <script>
-    const socket = io.connect('http://localhost:3000/iot'); //192.168.53.254
+    const socket = io.connect('http://192.168.53.254:3000/iot'); 
 
     socket.on("connect_error", (err) => {
       console.log(`connect_error due to ${err.message}`);
