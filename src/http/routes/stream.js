@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const io = require('socket.io-client')
 const { StreamCamera, Codec, Flip, SensorMode } = require('pi-camera-connect')
-const socket = io.connect('http://localhost:3000/iot')
+const socket = io.connect('http://localhost:3000/lma')
 
 
 const streamCamera = new StreamCamera({
