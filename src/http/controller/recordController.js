@@ -6,6 +6,7 @@ module.exports = {
       const records = await Record.find({houseId: res.locals.user.houseId})
       if(records.length === 0){
         res.status(404).json({message: 'No records found for this house'})
+        return
       }
       res.send(records)
     }catch(e){
