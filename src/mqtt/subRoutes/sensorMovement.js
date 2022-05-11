@@ -5,18 +5,30 @@ module.exports = {
   onSensorMovement: async message => {
     console.log('Movement received :', message.toString())
 
+    //RECORDING AND CONVERTING VIDEO
     let video_name = await cameraManager.recordCameraVideo()
     await cameraManager.convertVideoToMp4(video_name)
-    let video_location = await cameraManager.sendVideoToAWScloud(video_name, process.env.HOUSE_ID)
-    await cameraManager.addVideoToMongo(process.env.HOUSE_ID, video_location, 'undefined')
-    await cameraManager.deleteVideoLocally(video_name)
+
+    //SENDING VIDEO TO CLOUD AND ANALYSE VIDEO
+    let result = await Promise.all(
+      [
+        cameraManager.sendVideoToAWScloud(video_name, process.env.HOUSE_ID),
+        cameraManager.analyseMovement(video_name)
+      ].map(p => p.catch(e => e))
+    )
+    
+    //ADD VIDEO URL TO MONGODB
+    await cameraManager.addVideoToMongo(process.env.HOUSE_ID, result[0], result[1])
+
+    //DELETE ALL FILES FROM RECORDING
+    await cameraManager.deleteLocalData(video_name)
 
     const registrationToken = 'c6d4i3oTSnWqS8pUNxOXPR:APA91bFtWkNF-IX5Z4PZTWoePk3QPh-VLDcHCodc5eodOiijTzEelNdnlz0SO0YQVEsjlsW2fHFKAfFjlYpa35aAZ-2R062qwD3tObp-vBR8jHgJ32dlsKHYAuOwIx7nhLUqWkiPc3dE'
 
     const payload = {
       notification: {
         title: 'Nouvelle vidéo',
-        body: 'Vous avez eu nouvelle visite devant votre porte, regardez la vidéo !',
+        body: 'Vous avez eu une nouvelle visite devant votre porte (' + result[1] + '), regardez la vidéo !',
       }
     }
 

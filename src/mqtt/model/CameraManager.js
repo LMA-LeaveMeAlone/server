@@ -2,13 +2,21 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const ObjectId = require('mongoose').Types.ObjectId
 const Record = require('../../http/model/Record')
+const extractFrames = require('ffmpeg-extract-frames')
+const TMP_FILE_RECORDS = '/home/ubuntu/server/records/'
 
+//AWS S3 CLOUD
 const AWS = require('aws-sdk')
 const AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY
 const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
 const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME
 
-const tmp_file_records = '/home/ubuntu/server/records/'
+//CLARIFAI RECOGNITION
+const USER_ID = '990zcz9abb6q'
+const PAT = 'a01aace764274c248b31981e5f8f22af'
+const APP_ID = 'ed7291e4fe12436b879490d048cb1d3f'
+const MODEL_ID = 'general-image-recognition'
+const enumObjects = ['people', 'dog', 'cat', 'pet', 'animal']
 
 module.exports = {
   recordCameraVideo: async () => {
@@ -17,7 +25,7 @@ module.exports = {
       //video name (timestamp)
       let video_name = getDate()
       //Exec camera recording
-      exec(`raspivid -o ${tmp_file_records + video_name}.h264 -awb greyworld -t 5000`, (error, stdout, stderr) => {
+      exec(`raspivid -o ${TMP_FILE_RECORDS + video_name}.h264 -awb greyworld -t 5000`, (error, stdout, stderr) => {
         if (stderr || error) {
           resolve(stderr || error)
         }else{
@@ -32,7 +40,7 @@ module.exports = {
     return new Promise((resolve) => {
       console.log('CONVERTING VIDEO')
       //Exec video convert to mp4
-      exec(`MP4Box -add ${tmp_file_records + video_name}.h264 ${tmp_file_records + video_name}.mp4`, (error, stdout, stderr) => {
+      exec(`MP4Box -add ${TMP_FILE_RECORDS + video_name}.h264 ${TMP_FILE_RECORDS + video_name}.mp4`, (error, stdout, stderr) => {
         if (stderr || error) {
           resolve(stderr || error)
         }else{
@@ -41,6 +49,71 @@ module.exports = {
       })
     })
   },
+
+  analyseMovement: async (video_name) => {
+    
+    //extract image from video
+    await extractFrames({
+      input: TMP_FILE_RECORDS + video_name + '.mp4' ,
+      output: TMP_FILE_RECORDS + 'predict.png',
+      offsets: [
+        1000
+      ]
+    })
+
+    return new Promise((resolve) => {
+
+      const { ClarifaiStub, grpc } = require('clarifai-nodejs-grpc')
+
+      const stub = ClarifaiStub.grpc()
+
+      // This will be used by every Clarifai endpoint call
+      const metadata = new grpc.Metadata()
+      metadata.set('authorization', 'Key ' + PAT)
+
+      const fs = require('fs')
+      const imageBytes = fs.readFileSync(TMP_FILE_RECORDS + '/predict.png')
+      console.log(imageBytes)
+
+      stub.PostModelOutputs(
+        {
+          user_app_id: {
+            'user_id': USER_ID,
+            'app_id': APP_ID
+          },
+          model_id: MODEL_ID,
+          //version_id: MODEL_VERSION_ID, // This is optional. Defaults to the latest model version.
+          inputs: [
+            { data: { image: { base64: imageBytes } } }
+          ]
+        },
+        metadata,
+        (err, response) => {
+          if (err) {
+            throw new Error(err)
+          }
+
+          if (response.status.code !== 10000) {
+            throw new Error('Post model outputs failed, status: ' + response.status.description)
+          }
+
+          // Since we have one input, one output will exist here.
+          const output = response.outputs[0]
+
+          //console.log(output.data.concepts)
+
+          for(let i = 0; i < output.data.concepts.length; i++){
+            for(let j = 0; j < enumObjects.length; j++){
+              //console.log(enumObjects[j] + ' ? ' + output.data.concepts[i].name)
+              if(enumObjects[j] == output.data.concepts[i].name) return resolve(enumObjects[j])
+            }
+          }
+
+          resolve('Alien')
+        }
+      )
+    })
+  }, 
 
   //params : video_name, house_id
   sendVideoToAWScloud: async (video_name, house_id) => {
@@ -53,7 +126,7 @@ module.exports = {
       })
 
       //Lecture du fichier vidéo que l'ont veut envoyer
-      fs.readFile(tmp_file_records + video_name + '.mp4', (err, data) => {
+      fs.readFile(TMP_FILE_RECORDS + video_name + '.mp4', (err, data) => {
         if(err) resolve({result: false})
 
         //Paramètres pour l'envoie de la vidéo
@@ -93,12 +166,16 @@ module.exports = {
     })
   },
 
-  deleteVideoLocally: async (video_name) => {
+  deleteLocalData: async (video_name) => {
     return new Promise((resolve) => {
-      console.log('DELETING VIDEO')
-      fs.unlink(tmp_file_records + video_name + '.h264', (err) => {
+      console.log('DELETING IMAGE PREDICT')
+      fs.unlink(TMP_FILE_RECORDS + 'predict.png', (err) => {
         if(err) resolve(err)
-        fs.unlink(tmp_file_records + video_name + '.mp4', (err) => {
+      })
+      console.log('DELETING VIDEO')
+      fs.unlink(TMP_FILE_RECORDS + video_name + '.h264', (err) => {
+        if(err) resolve(err)
+        fs.unlink(TMP_FILE_RECORDS + video_name + '.mp4', (err) => {
           if(err) resolve(err)
           resolve(true)
         })
