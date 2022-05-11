@@ -14,7 +14,6 @@ const io = require('socket.io')(http, {
   }
 })
 
-// Injects .env file in process.env
 const PORT = process.env.SERVER_PORT || 80
 // Middlewares
 app.use(require('cors')())
@@ -29,7 +28,7 @@ app.get(appRoot, (req, res) => {
   res.sendFile('root')
 })
 app.get(appRoot + '/stream', (req, res) => {
-  res.sendFile(__dirname + '/stream/frame.jpg')
+  res.sendFile(__dirname + '/index.html')
 })
 
 //SOCKETS
