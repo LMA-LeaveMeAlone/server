@@ -54,7 +54,7 @@ function startStreaming(io){
   isStreaming = true
 
   const readStream = () => {
-    exec(`raspistill -w 200 -h 200 -o ${__dirname}/stream/frame.jpg -t 100 -n`, () => {
+    exec(`raspistill -w 200 -h 200 -o ${__dirname}/stream/frame.jpg -t 100 -n -awb greyworld`, () => {
       fs.readFile(__dirname + '/stream/frame.jpg', (err, data) => {
         io.sockets.emit('liveStream', {image: true, buffer: data.toString('base64')})
         if(isStreaming) readStream()
