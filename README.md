@@ -13,7 +13,9 @@ Create a file called `.env` and write inside them the environment variables that
 Example :
 
 `
-SERVER_PORT=3000 // The port you want this app to run on (default 80)
+ALLOW_MQTT=true
+HOUSE_ID="623d8e34e7f571ff792a7e6d"
+SERVER_PORT=4000 // The port you want this app to run on (default 80)
 MQTT_BROKER_URL="http://localhost:1883" // The URL of your MQTT Broker (required)
 MONGODB_URL="mongodb://localhost:27017/leavemealone" // The URL of your mongoDB database (required)
 ACCESS_TOKEN_SECRET=GD8Z7A9GD8326D307 // A random complex string to provide a key for JWT tokens creation
