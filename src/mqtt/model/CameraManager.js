@@ -12,10 +12,10 @@ const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
 const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME
 
 //CLARIFAI RECOGNITION
-const USER_ID = '990zcz9abb6q'
-const PAT = 'a01aace764274c248b31981e5f8f22af'
-const APP_ID = 'ed7291e4fe12436b879490d048cb1d3f'
-const MODEL_ID = 'general-image-recognition'
+const CLRF_USER_ID = process.env.CLRF_USER_ID
+const CLRF_PAT = process.env.CLRF_PAT
+const CLRF_APP_ID = process.env.CLRF_APP_ID
+const CLRF_MODEL_ID = process.env.CLRF_MODEL_ID
 const enumObjects = ['people', 'dog', 'cat', 'pet', 'animal']
 
 module.exports = {
